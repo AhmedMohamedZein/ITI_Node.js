@@ -4,7 +4,7 @@ const http = require("http");
 http.createServer((req,res)=>{
     let resultText = 'result = ' ;
     let result = 0 ; 
-    if ( req.url != '/favicon.ico' ) {
+    if ( req.url !== '/favicon.ico' ) {
         const data = req.url.split('/') ; 
         resultText += `${data[2]}`
         switch (data[1]) {
