@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Styels/index.css" type="text/css">
+        <link rel="icon" href="/ClientSide/imgs/whatsapp.png" type="image/png">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <title>Whatsapp</title>
+    </head>
+   <body class="h-100">
+        <main class="container h-100 mt-4 mb-3 ">
+            <div id="chatOutput" class="container d-flex flex-column overflow-auto">
+            </div>
+            <div id="chatInput" class="container d-flex justify-content-center gap-3"> 
+                <input type="text" value=" " name="" id="enter">
+                <button id="submit">Send</button>
+            </div>
+        </main>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+            var input = document.getElementById("enter");
+            var button = document.getElementById("submit");
+            var chat = document.getElementById("chatOutput");
+
+            button.addEventListener('click' , sendData);
+
+            function sendData () {
+                if (input.value) {
+                    var item = document.createElement('span');
+                    var container = document.createElement('div');
+                    item.textContent = input.value;
+                    container.appendChild(item);
+                    chat.appendChild(container);
+                    socket.emit('chat message', input.value);
+                    input.value = '';
+                }
+            }
+            socket.on('chat message', function(msg) {
+                var item = document.createElement('span');
+                var container = document.createElement('div');
+                item.textContent = msg;
+                container.classList.add("d-flex");
+                container.classList.add("flex-row-reverse");
+                
+                container.appendChild(item);
+                chat.appendChild(container);
+            });
+        </script>
+   </body>
+
+</html>

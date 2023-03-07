@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    border: 0;
+}
+
+main {
+    background-image: url("/ClientSide/imgs/DefaultWhatsAppBackground.jpg");
+}
+
+body {
+    background-color: #00A783 !important;
+}
+
+#chatOutput {
+    height: 80vh ;
+    margin-bottom: 0.5%;
+}
+
+button {
+    background-color: #00A783 !important;
+    height: 6vh;
+    width: 9vh;
+    border-radius: 30px !important;
+}
+
+input {
+    width: 70vh;
+    border: solid 4px white;
+    border-radius: 30px !important;
+    border: solid 2px #00A783;
+}
+
+div {
+    padding: 2% !important;
+}
+
+span {
+    margin-top: 0.5%;
+    font-size: 2.5vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #D9FDD3;
+    border-radius: 10px !important;
+    padding: 0.5% !important;
+}

@@ -7,7 +7,7 @@ const userAddress = document.getElementById("address");
 (async function (){
     let dataParse ;
     try {
-        const fetchedData = await fetch('http://localhost:4500/welcome/userdata/' , {method : 'GET'});
+        const fetchedData = await fetch('http://localhost:3000/welcome/userdata/' , {method : 'GET'});
         dataParse = await fetchedData.json();    
     }
     catch (err) {
