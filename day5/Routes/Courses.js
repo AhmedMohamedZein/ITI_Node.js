@@ -1,22 +1,15 @@
 const express = require("express");
 const router = express.Router(); 
+const {getAllCourses , getSpecificCourse , updateSpecificCourse , createCourses} = require('../Controllers/coursesController');
 //#region Students End-Points
 
-router.get('/' , (req,res)=>{
-    res.send("getAll Courses end point");
-});
+router.get('/' , getAllCourses);
 
-router.get('/:id',(req,res)=>{
-    res.send(`spesific Course data with id ${req.params.id}`);
-});
+router.get('/:name', getSpecificCourse );
 
-router.post('/' , (req,res)=>{
-    res.send('Create Course with your body');
-});
+router.post('/' , createCourses);
 
-router.put ('/:id', (req,res)=>{
-    res.send(`Update COurse with id ${req.params.id}`);
-});
+router.put ('/:name', updateSpecificCourse);
 //#endregion
 
-module.exports = { students : router };
+module.exports = { courses : router };
