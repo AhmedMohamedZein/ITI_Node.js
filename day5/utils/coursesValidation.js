@@ -6,7 +6,7 @@ const schemaA = {
     type: "object",
     properties: {
       name: {type: "string"},
-      creditHours: {type: "string"},
+      creditHours: {type: "integer"},
     },
     required: ["name","creditHours"],
     additionalProperties: false,
@@ -21,6 +21,18 @@ const schemaB = {
     additionalProperties: false,
 }
 
+const schemaC = {
+  type: "object",
+  properties: {
+    rename: {type: "string"},
+    name: {type: "string"},
+  },
+  required: ["name","rename"],
+  additionalProperties: false,
+}
+
+
 const validate = ajv.compile(schemaA);
 const validateGetRequest = ajv.compile(schemaB);
-module.exports = { validate , validateGetRequest } ;
+const validateUpdate = ajv.compile(schemaC);
+module.exports = { validate , validateGetRequest , validateUpdate } ;

@@ -8,7 +8,7 @@ router.get('/:name', getSpecificCourse );
 
 router.post('/' , createCourses);
 
-router.put ('/:name', updateSpecificCourse);
+router.put ('/', updateSpecificCourse);
 
 router.delete('/:name' , deleteSpecificCourse); 
 //#endregion

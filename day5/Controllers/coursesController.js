@@ -1,37 +1,82 @@
-const { validate , validateGetRequest } = require('../utils/coursesValidation');
+const { validate , validateGetRequest , validateUpdate } = require('../utils/coursesValidation');
+const Course = require('../Modules/coursesModule');
 
-function getAllCourses (req,res) {
-    res.status(200).json("all courses");
+async function getAllCourses (req,res) {
+    try {
+        const allCoursesObject = new Course ();
+        const allCourses = await allCoursesObject.getAllCourses();
+        console.log(allCourses);
+        res.status(200).json(allCourses);
+    }
+    catch (error) {
+        res.status(500).json("Server Error");
+    }
 }
 
-function getSpecificCourse (req,res) {
+async function getSpecificCourse (req,res) {
     if ( !validateGetRequest(req.params) ) {
         res.status(400).json("Bad request, you should specify a courses name");
     }
-    res.status(200).json(`Good request the course name is : ${req.params.name}`);
+    else {
+        try {
+            const specificCourseObject = new Course ();
+            const specificCourse = await specificCourseObject.getSpecificCourse(req.params); //object contains 2 variables
+            console.log(specificCourse);
+            res.status(200).json(specificCourse);    
+        }
+        catch (error) {
+            res.status(500).json("Server error");
+        }
+    }
 }
 
 
-function createCourses (req,res) {
+async function createCourses (req,res) {
     if ( !validate (req.body) ) {
         res.status(400).json("Bad request, you should specify a courses name and creditHours");
     }
-    res.status(200).json ("create a course");
+    else {
+        try {
+            const createCourse = new Course ();
+            await createCourse.createCourses(req.body);
+            res.status(200).json ("created a course successfully !");
+        }catch (error) {
+            res.status(500).json("Server error");
+        }
+    }
 }
 
 
-function updateSpecificCourse (req,res) {
-    if ( !validateGetRequest(req.params) ) {
+async function updateSpecificCourse (req,res) {
+    if ( !validateUpdate(req.body) ) {
         res.status(400).json("Bad request, you should specify a courses name");
     }
-    res.status(200).json("update a speicific course by name");
+    else {
+        try {
+            const updateSpecificCourseObject = new Course ();
+            await updateSpecificCourseObject.updateSpecificCourse(req.body); //object contains 2 variables
+            res.status(200).json("Done !");    
+        }
+        catch (error) {
+            res.status(500).json("Server error");
+        }
+    }
 }
 
-function deleteSpecificCourse (req,res) {
+async function deleteSpecificCourse (req,res) {
     if ( !validateGetRequest(req.params) ) {
         res.status(400).json("Bad request, you should specify a courses name");
     }
-    res.status(200).json(`Good request the course you want to delete name is : ${req.params.name}`);
+    else {
+        try {
+            const deleteSpecificCourseObject = new Course ();
+            await deleteSpecificCourseObject.getSpecificCourse(req.params); //object contains 2 variables
+            res.status(200).json("Done !");    
+        }
+        catch (error) {
+            res.status(500).json("Server error");
+        }
+    }
 }
 
 
