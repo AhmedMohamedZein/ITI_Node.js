@@ -27,10 +27,18 @@ function updateSpecificCourse (req,res) {
     res.status(200).json("update a speicific course by name");
 }
 
+function deleteSpecificCourse (req,res) {
+    if ( !validateGetRequest(req.params) ) {
+        res.status(400).json("Bad request, you should specify a courses name");
+    }
+    res.status(200).json(`Good request the course you want to delete name is : ${req.params.name}`);
+}
+
 
 module.exports = { 
     getAllCourses ,
     getSpecificCourse ,
     updateSpecificCourse ,
-    createCourses
+    createCourses,
+    deleteSpecificCourse
 };
