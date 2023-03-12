@@ -1,37 +1,75 @@
-const { validate , validateGetRequest } = require('../utils/studentsValidation');
+const { validate , validateGetRequest , validateDeleteRequest} = require('../utils/studentsValidation');
+const Student = require('../Modules/studentModule');
 
-function getAllStudents (req,res) {
-    res.status(200).json("all students");
+async function getAllStudents (req,res) {
+    const getAllStudentsObject = new Student ();
+    const  getAllStudents = await getAllStudentsObject.getAllStudents();
+    res.status(200).json(getAllStudents);
 }
 
-function getSpecificStudent (req,res) {
+async function getSpecificStudent (req,res) {
     if ( !validateGetRequest(req.params) ) {
         res.status(400).json("Bad request, you should specify a student id");
     }
-    res.status(200).json(`Good request the student id is : ${req.params.id}`);
+    else { 
+        try{
+            const getSpecificStudentObject = new Student();
+            const getSpecificStudent = await getSpecificStudentObject.getSpecificStudent(req.params);
+            res.status(200).json(getSpecificStudent);
+        }
+        catch (error) {
+            res.status(500).json("Server side error");
+        }
+    }
 }
 
 
-function createStudent (req,res) {
+async function createStudent (req,res) {
     if ( !validate (req.body) ) {
         res.status(400).json("Bad request, you should specify a student name and id");
     }
-    res.status(200).json ("create a new student");
+    else { 
+        try {
+            const createStudentObject = new Student();
+            await createStudentObject.createStudnt(req.body);
+            res.status(200).json("done !");
+        }
+        catch (error) {
+            res.status(500).json("Server side error ");
+        }
+    }
 }
 
 
-function updateSpecificStudent (req,res) {
-    if ( !validateGetRequest(req.params) ) {
+async function updateSpecificStudent (req,res) {
+    if ( !validateGetRequest(req.body) ) {
         res.status(400).json("Bad request, you should specify a student id");
     }
-    res.status(200).json(`Good update request the student id is : ${req.params.id} updated`);
+    else {
+        try{
+            const updateSpecificStudentObject = new Student();
+            await updateSpecificStudentObject.updateSpecificStudent(req.body);
+            res.status(200).json("done !");
+        }catch (error) {
+            res.status(500).json("Server side error ");
+        }
+    }
 }
 
-function deleteSpecificStudent (req,res) {
-    if ( !validateGetRequest(req.params) ) {
+async function deleteSpecificStudent (req,res) {
+    if ( !validateDeleteRequest(req.params) ) {
         res.status(400).json("Bad request, you should specify a student id");
     }
-    res.status(200).json(`Good request the student id you want to delete is : ${req.params.id}`);
+    else {
+        try{
+            const deleteSpecificStudentObject = new Student();
+            await deleteSpecificStudentObject.deleteSpecificStudent(req.params);
+            res.status(200).json("done !")
+        }
+        catch (error){
+            res.status(500).json("Server side error");
+        }
+    }
 }
 
 module.exports = { 

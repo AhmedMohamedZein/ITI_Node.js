@@ -3,7 +3,7 @@ class Student {
 
     async getAllStudents () {
         try {
-            const data = await client.db("school").collection("students").find({}).project({_id : 0}).toArray();
+            const data = await client.db("school").collection("students").find({}).toArray();
             client.close();
             return data;        
         }catch(error) {
@@ -14,7 +14,8 @@ class Student {
     }
     async getSpecificStudent (sid) {
         try {
-            const data = await client.db("school").collection("students").findOne({_id:sid["id"]}).project({_id : 0}).toArray();
+            // console.log(typeof sid["id"]);
+            const data = await client.db("school").collection("students").findOne({_id:Number(sid["id"])});
             client.close();
             return data;        
         }catch(error) {
@@ -25,7 +26,7 @@ class Student {
     }
     async createStudnt (studentObject) {
         try {
-            await client.db("school").collection("students").insertOne({name:coursObject["name"],creditHours:coursObject["creditHours"]});
+            await client.db("school").collection("students").insertOne({name:studentObject["name"],_id:Number(studentObject["id"])});
             client.close();        
         }catch(error) {
             console.log(error);
@@ -33,9 +34,9 @@ class Student {
             throw new Error ();
         }
     }
-    async updateSpecificCourse(courseObject) {
+    async updateSpecificStudent(studentObject) {
         try {
-            await client.db("school").collection("students").updateOne({name:courseObject["rename"]},{ "$set": { name:courseObject["name"]} });
+            await client.db("school").collection("students").updateOne({_id:Number(studentObject["id"])},{ "$set": { name:studentObject["name"]} });
             client.close();        
         }catch(error) {
             console.log(error);
@@ -43,9 +44,9 @@ class Student {
             throw new Error ();
         }  
     }
-    async deleteSpecificCourse (courseName){
+    async deleteSpecificStudent (sid){
         try {
-            const data = await client.db("school").collection("students").deleteOne({name:courseName["name"]});
+            await client.db("school").collection("students").deleteOne({_id:Number(sid["id"])});
             client.close();        
         }catch(error) {
             console.log(error);

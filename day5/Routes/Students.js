@@ -9,7 +9,7 @@ router.get('/:id',getSpecificStudent);
 
 router.post('/' , createStudent);
 
-router.put('/:id' , updateSpecificStudent);
+router.put('/' , updateSpecificStudent);
 
 router.delete('/:id' , deleteSpecificStudent);
 //#endregion
